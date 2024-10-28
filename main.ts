@@ -5,5 +5,3 @@ assets.animation`MagierZaubertAnimation`,
 200,
 false
 )
-pause(2000)
-animation.stopAnimation(animation.AnimationTypes.All, Zauberer)
