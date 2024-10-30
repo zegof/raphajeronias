@@ -3,7 +3,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         animation.runImageAnimation(
         Zauberer,
         assets.animation`MagierZaubertAnimation`,
-        1000,
+        500,
         false
         )
         projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
@@ -23,17 +23,23 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         projectile.setImage(assets.image`ProjectileZauberer`)
     }
 })
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Zauberer.vy == 0) {
+        Zauberer.vy = -200
+    }
+})
 let projectile: Sprite = null
 let Scale = 0
 let Zauberer: Sprite = null
 let ZaubererBildRichtung = 0
-tiles.setCurrentTilemap(tilemap`Level2`)
+tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 ZaubererBildRichtung = 1
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
 Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
 controller.moveSprite(Zauberer, 100, 0)
+Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
 game.onUpdate(function () {
     if (Zauberer.vx > 0) {
