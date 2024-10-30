@@ -29,14 +29,22 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
-    tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
-    Zauberer.setPosition(20, 199)
+    LevelVar += 1
+    if (LevelVar == 2) {
+        tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
+        Zauberer.setPosition(37, 519)
+    }
+    if (LevelVar == 3) {
+        tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        Zauberer.setPosition(37, 519)
+    }
 })
 let projectile: Sprite = null
+let LevelVar = 0
 let Scale = 0
 let Zauberer: Sprite = null
 let ZaubererBildRichtung = 0
-tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
+tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 ZaubererBildRichtung = 1
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
@@ -46,6 +54,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
+LevelVar = 1
 game.onUpdate(function () {
     if (Zauberer.vx > 0) {
         ZaubererBildVar = assets.image`Magier Normal`
@@ -58,4 +67,5 @@ game.onUpdate(function () {
         }
         Zauberer.setImage(ZaubererBildVar)
     }
+    Zauberer.sayText(convertToText(Zauberer.y))
 })
