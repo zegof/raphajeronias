@@ -28,6 +28,10 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         Zauberer.vy = -200
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
+    tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
+    Zauberer.setPosition(20, 199)
+})
 let projectile: Sprite = null
 let Scale = 0
 let Zauberer: Sprite = null
@@ -38,6 +42,7 @@ ZaubererBildRichtung = 1
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
 Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
+Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
