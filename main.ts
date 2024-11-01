@@ -1,3 +1,6 @@
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
+    sprite.y += 1
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (ZaubererBildRichtung == 1) {
         animation.runImageAnimation(
@@ -54,6 +57,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        Zauberer.setPosition(37, 871)
+    }
+    if (LevelVar == 6) {
+        tiles.setCurrentTilemap(tilemap`Bossarena3Tilemap`)
         Zauberer.setPosition(37, 871)
     }
 })
