@@ -33,6 +33,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     if (LevelVar == 2) {
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
+        Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Enemy)
+        animation.runImageAnimation(
+        Geist,
+        assets.animation`GeistAngriffAnimation`,
+        1000,
+        true
+        )
     }
     if (LevelVar == 3) {
         tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
@@ -43,6 +50,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zauberer.setPosition(37, 871)
     }
 })
+let Geist: Sprite = null
 let projectile: Sprite = null
 let LevelVar = 0
 let Scale = 0
