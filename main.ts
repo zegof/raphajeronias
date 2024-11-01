@@ -60,7 +60,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zauberer.setPosition(37, 871)
     }
     if (LevelVar == 6) {
-        tiles.setCurrentTilemap(tilemap`Bossarena3Tilemap`)
+        tiles.setCurrentTilemap(tilemap`Level4`)
         Zauberer.setPosition(37, 871)
     }
 })
