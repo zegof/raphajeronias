@@ -31,12 +31,16 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
     LevelVar += 1
     if (LevelVar == 2) {
-        tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
-        Zauberer.setPosition(37, 519)
+        tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
+        Zauberer.setPosition(37, 743)
     }
     if (LevelVar == 3) {
-        tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
         Zauberer.setPosition(37, 519)
+    }
+    if (LevelVar == 4) {
+        tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        Zauberer.setPosition(37, 871)
     }
 })
 let projectile: Sprite = null
