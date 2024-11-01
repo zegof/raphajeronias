@@ -56,11 +56,22 @@ Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
 LevelVar = 1
 game.onUpdate(function () {
-    if (Zauberer.vx > 0) {
+    if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
         ZaubererBildRichtung = 1
         Zauberer.setImage(ZaubererBildVar)
-    } else if (Zauberer.vx < 0) {
+    } else if (Zauberer.vx < 0 && Zauberer.vy == 0) {
+        if (ZaubererBildRichtung == 1) {
+            ZaubererBildVar.flipX()
+            ZaubererBildRichtung = 2
+        }
+        Zauberer.setImage(ZaubererBildVar)
+    } else if (Zauberer.vy != 0 && Zauberer.vx > 0) {
+        ZaubererBildVar = assets.image`ZaubererJumpBild`
+        ZaubererBildRichtung = 1
+        Zauberer.setImage(ZaubererBildVar)
+    } else if (Zauberer.vy != 0 && Zauberer.vx > 0) {
+        ZaubererBildVar = assets.image`ZaubererJumpBild`
         if (ZaubererBildRichtung == 1) {
             ZaubererBildVar.flipX()
             ZaubererBildRichtung = 2
