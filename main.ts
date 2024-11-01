@@ -34,6 +34,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
         Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Enemy)
+        statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+        statusbar.setColor(10, 8)
+        statusbar.attachToSprite(Geist, 0, 0)
         animation.runImageAnimation(
         Geist,
         assets.animation`GeistAngriffAnimation`,
@@ -46,10 +49,23 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zauberer.setPosition(37, 519)
     }
     if (LevelVar == 4) {
+        tiles.setCurrentTilemap(tilemap`Bossarena2Tilemap`)
+        Zauberer.setPosition(37, 519)
+    }
+    if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
         Zauberer.setPosition(37, 871)
     }
 })
+statusbars.onZero(StatusBarKind.Health, function (status) {
+    tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
+    sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite, effects.ashes, 500)
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(-1, -10)
+})
+let statusbar: StatusBarSprite = null
 let Geist: Sprite = null
 let projectile: Sprite = null
 let LevelVar = 0
@@ -67,6 +83,7 @@ controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
 LevelVar = 1
+info.setLife(4)
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
