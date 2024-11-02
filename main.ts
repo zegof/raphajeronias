@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const Penny = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
-    sprite.y += 1
+    sprite.y += -10
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (ZaubererBildRichtung == 1) {
