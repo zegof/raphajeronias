@@ -177,12 +177,10 @@ game.onUpdate(function () {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
         ZaubererBildRichtung = 1
         Zauberer.setImage(ZaubererBildVar)
-    } else if (Zauberer.vy != 0 && Zauberer.vx > 0) {
+    } else if (Zauberer.vy != 0 && Zauberer.vx < 0) {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
-        if (ZaubererBildRichtung == 1) {
-            ZaubererBildVar.flipX()
-            ZaubererBildRichtung = 2
-        }
+        ZaubererBildVar.flipX()
+        ZaubererBildRichtung = 2
         Zauberer.setImage(ZaubererBildVar)
     }
     Zauberer.sayText(convertToText(Zauberer.y))
