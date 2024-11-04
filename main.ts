@@ -71,10 +71,16 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    if (true) {
+        statusbarpennys += 50
+    }
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(-1, -10)
 })
+let statusbarpennys = 0
 let statusbar: StatusBarSprite = null
 let Geist: Sprite = null
 let projectile: Sprite = null
