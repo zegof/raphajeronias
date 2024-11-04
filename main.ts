@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const Penny = SpriteKind.create()
+    export const Schnelligkeitstrank = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
     sprite.y += -10
@@ -70,6 +71,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
 statusbars.onZero(StatusBarKind.Health, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    controller.moveSprite(Zauberer, 200, 0)
+    timer.after(40000, function () {
+        controller.moveSprite(Zauberer, 100, 0)
+    })
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     if (true) {
@@ -152,6 +160,8 @@ Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
 LevelVar = 1
 info.setLife(4)
+let Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schnelligkeitstrank)
+Zaubertrank.setPosition(500, 199)
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
