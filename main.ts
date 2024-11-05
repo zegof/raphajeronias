@@ -48,7 +48,7 @@ statusbars.onZero(StatusBarKind.BossHealth, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
     Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regnerationstrank)
-    Zaubertrank.setPosition(0, 1)
+    Zaubertrank.sayText("Regnerationstrank")
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Zauberer.vy == 0) {
@@ -111,6 +111,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
     timer.after(40000, function () {
         controller.moveSprite(Zauberer, 100, 0)
     })
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Regnerationstrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    info.setLife(4)
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     statusbarpennys += 50
