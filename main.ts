@@ -86,7 +86,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
     })
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
-    statusbarpennys += 50
+    if (true) {
+        statusbarpennys += 50
+    }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
