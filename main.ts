@@ -1,9 +1,22 @@
 namespace SpriteKind {
     export const Penny = SpriteKind.create()
     export const Schnelligkeitstrank = SpriteKind.create()
+    export const Stärketrank = SpriteKind.create()
+    export const Resistenztrank = SpriteKind.create()
+    export const Regnerationstrank = SpriteKind.create()
+}
+namespace StatusBarKind {
+    export const BossHealth = StatusBarKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
     sprite.y += -10
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    SchadenZauberer = -20
+    timer.after(40000, function () {
+        SchadenZauberer = -10
+    })
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     let ZaubererBildRichtung = 0
@@ -31,10 +44,22 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         projectile.setImage(assets.image`ProjectileZauberer`)
     }
 })
+statusbars.onZero(StatusBarKind.BossHealth, function (status) {
+    tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
+    sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
+    Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regnerationstrank)
+    Zaubertrank.setPosition(0, 1)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Zauberer.vy == 0) {
         Zauberer.vy = -200
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    timer.after(40000, function () {
+    	
+    })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
     LevelVar += 1
@@ -42,7 +67,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
         Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Enemy)
-        statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+        statusbar = statusbars.create(20, 4, StatusBarKind.BossHealth)
         statusbar.setColor(10, 8)
         statusbar.attachToSprite(Geist, 0, 0)
         animation.runImageAnimation(
@@ -51,6 +76,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         1000,
         true
         )
+        Zaubertrank = sprites.create(assets.image`Stärketrank`, SpriteKind.Stärketrank)
+        Zaubertrank.setPosition(720, 582)
+        Zaubertrank.sayText("Stärketrank")
+        Zaubertrank = sprites.create(assets.image`Resistenztrank`, SpriteKind.Resistenztrank)
+        Zaubertrank.setPosition(550, 550)
+        Zaubertrank.sayText("Resistenztrank")
     }
     if (LevelVar == 3) {
         tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
@@ -74,10 +105,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zauberer.setPosition(37, 871)
     }
 })
-statusbars.onZero(StatusBarKind.Health, function (status) {
-    tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
-    sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     controller.moveSprite(Zauberer, 200, 0)
@@ -86,76 +113,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
     })
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
-    if (true) {
-        statusbarpennys += 50
-    }
+    statusbarpennys += 50
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
-    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(-1, -10)
+    statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
 })
 let statusbarpennys = 0
 let Spuckball: Sprite = null
 let statusbar: StatusBarSprite = null
 let Geist: Sprite = null
 let projectile: Sprite = null
+let SchadenZauberer = 0
+let Zaubertrank: Sprite = null
 let LevelVar = 0
 let Scale = 0
 let Zauberer: Sprite = null
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
-let Penny = sprites.create(img`
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .....................444444......................
-    ...................444444444d....................
-    ..................444444444444...................
-    .................4444444444444d..................
-    .................44444444444444..................
-    ................4444444ffc44444e.................
-    ................444444ffff444444.................
-    ................444444f444444444.................
-    ...............e44444fe444444444d................
-    ...............444444f4444444444e................
-    ...............444444f44444444444................
-    ...............444444f44444444444................
-    ...............444444f4444444444e................
-    ...............e44444fe444444444.................
-    ................44444ff444c44444.................
-    ................444444fffff44444.................
-    ................e444444fff44444d.................
-    .................44444444444444..................
-    .................d444444444444...................
-    ..................c4444444444b...................
-    ...................b44444444d....................
-    .....................e4444b......................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    .................................................
-    `, SpriteKind.Penny)
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
 Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
@@ -163,10 +138,12 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
-let Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schnelligkeitstrank)
+Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
+Zaubertrank.sayText("Schnelligkeit")
+SchadenZauberer = -10
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
