@@ -111,6 +111,16 @@ info.onLifeZero(function () {
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(50)
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    TraenkeMenu = miniMenu.createMenu(
+    miniMenu.createMenuItem("Schnelligkeit", assets.image`Schnelligkeitstrank`),
+    miniMenu.createMenuItem("Stärke", assets.image`Stärketrank`),
+    miniMenu.createMenuItem("Resistenz", assets.image`Resistenztrank`),
+    miniMenu.createMenuItem("Regneration", assets.image`Regenerationstrank`)
+    )
+    TraenkeMenu.setTitle("Tränke")
+    TraenkeMenu.setPosition(Zauberer.x, Zauberer.y)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 10, SchadenZauberer - 20)
@@ -147,6 +157,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 })
 let projectile: Sprite = null
 let ZaubererRichtung = 0
+let TraenkeMenu: miniMenu.MenuSprite = null
 let Spuckball: Sprite = null
 let Geist: Sprite = null
 let statusbar: StatusBarSprite = null
