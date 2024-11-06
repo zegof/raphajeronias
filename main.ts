@@ -10,7 +10,7 @@ namespace StatusBarKind {
     export const BossHealth = StatusBarKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
-    sprite.y += -10
+    sprite.y += -5
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -115,6 +115,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 10, SchadenZauberer - 20)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (sprite, location) {
+    tiles.setTileAt(tiles.getTileLocation(6, 18), assets.tile`FakeTile`)
+    tiles.setTileAt(tiles.getTileLocation(5, 18), assets.tile`FakeTile`)
+    tiles.setWallAt(tiles.getTileLocation(6, 18), true)
+    tiles.setWallAt(tiles.getTileLocation(5, 18), true)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(-0.5)
@@ -158,7 +164,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 1
+LevelVar = 2
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
