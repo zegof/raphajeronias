@@ -46,6 +46,9 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, othe
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
 })
+sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
+    info.changeScoreBy(100)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     timer.after(40000, function () {
@@ -54,6 +57,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
     LevelVar += 1
+    sprites.destroy(KleinerGeist)
     if (LevelVar == 2) {
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
@@ -103,9 +107,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
         controller.moveSprite(Zauberer, 100, 0)
     })
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
-    info.changeLifeBy(-0.75)
-})
 info.onLifeZero(function () {
     timer.after(500, function () {
         game.setGameOverMessage(false, "Game Over; Geschaffte Level: " + (LevelVar - 1))
@@ -124,10 +125,27 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (true) {
+        info.changeLifeBy(-0.5)
+        pause(5000)
+    } else {
+        info.changeLifeBy(0)
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
+    if (true) {
+        info.changeLifeBy(-0.75)
+        pause(5000)
+    } else {
+        info.changeLifeBy(0)
+    }
+})
 let Spuckball: Sprite = null
 let statusbar: StatusBarSprite = null
 let Geist: Sprite = null
 let projectile: Sprite = null
+let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
 let LevelVar = 0
@@ -148,10 +166,15 @@ Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schne
 Zaubertrank.setPosition(500, 199)
 Zaubertrank.sayText("Schnelligkeit")
 SchadenZauberer = -10
-let KleinerGeist = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
+KleinerGeist = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
+KleinerGeist.setPosition(500, 200)
 KleinerGeist.setFlag(SpriteFlag.GhostThroughWalls, true)
 KleinerGeist.setScale(0.2, ScaleAnchor.Middle)
 info.setScore(0)
+KleinerGeist.follow(Zauberer, 80)
+Zauberer.sayText("" + Zauberer.x + ("" + Zauberer.y))
+let KleinerGeist2 = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
+KleinerGeist2.setPosition(700, 200)
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
