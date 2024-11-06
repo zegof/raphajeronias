@@ -144,6 +144,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
     }
 })
 let projectile: Sprite = null
+let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Geist: Sprite = null
 let statusbar: StatusBarSprite = null
@@ -178,16 +179,16 @@ statusbar.attachToSprite(KleinerGeist)
 game.onUpdate(function () {
     if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
-        if (Zauberer.vx > 0) {
+        if (ZaubererRichtung == 1) {
             projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
             projectile.setScale(Scale, ScaleAnchor.Middle)
             timer.after(500, function () {
                 ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
                 projectile.setImage(assets.image`ProjectileZauberer`)
             })
-        } else if (Zauberer.vx < 0) {
+        } else if (ZaubererRichtung == 2) {
             ZaubererBildVar.flipX()
-            projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
+            projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, -50, 0)
             projectile.setScale(Scale, ScaleAnchor.Middle)
             timer.after(500, function () {
                 ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
@@ -195,16 +196,21 @@ game.onUpdate(function () {
                 projectile.setImage(assets.image`ProjectileZauberer`)
             })
         }
-    } else if (Zauberer.vx > 0 && Zauberer.vy == 0) {
+    } else if (Zauberer.vx > 0 && ZaubererRichtung == 1) {
         ZaubererBildVar = assets.image`Magier Normal`
-    } else if (Zauberer.vx < 0 && Zauberer.vy == 0) {
+    } else if (Zauberer.vx < 0 && ZaubererRichtung == 2) {
         ZaubererBildVar = assets.image`Magier Normal`
         ZaubererBildVar.flipX()
-    } else if (Zauberer.vy != 0 && Zauberer.vx > 0) {
+    } else if (Zauberer.vy != 0 && ZaubererRichtung == 1) {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
-    } else if (Zauberer.vy != 0 && Zauberer.vx < 0) {
+    } else if (Zauberer.vy != 0 && ZaubererRichtung == 2) {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
         ZaubererBildVar.flipX()
+    }
+    if (Zauberer.vx > 0) {
+        ZaubererRichtung = 1
+    } else if (Zauberer.vx < 0) {
+        ZaubererRichtung = 2
     }
     Zauberer.setImage(ZaubererBildVar)
     Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
