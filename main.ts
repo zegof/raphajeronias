@@ -70,11 +70,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zaubertrank.sayText("Regeneration")
     }
     if (LevelVar == 3) {
-        tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
-        Zauberer.setPosition(37, 519)
-    }
-    if (LevelVar == 4) {
-        tiles.setCurrentTilemap(tilemap`Bossarena2Tilemap`)
+        tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
         Zauberer.setPosition(37, 720)
         for (let index = 0; index < 10; index++) {
             Spuckball = sprites.create(assets.image`SpukballBild`, SpriteKind.Enemy)
@@ -82,11 +78,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Spuckball.x = scene.screenWidth()
         Spuckball.y = randint(10, scene.screenHeight())
     }
-    if (LevelVar == 5) {
+    if (LevelVar == 4) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
         Zauberer.setPosition(37, 871)
     }
-    if (LevelVar == 6) {
+    if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`Level3`)
         Zauberer.setPosition(37, 871)
     }
