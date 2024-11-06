@@ -3,7 +3,7 @@ namespace SpriteKind {
     export const Schnelligkeitstrank = SpriteKind.create()
     export const Stärketrank = SpriteKind.create()
     export const Resistenztrank = SpriteKind.create()
-    export const Regnerationstrank = SpriteKind.create()
+    export const Regenerationstrank = SpriteKind.create()
     export const Boss = SpriteKind.create()
 }
 namespace StatusBarKind {
@@ -34,7 +34,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 statusbars.onZero(StatusBarKind.BossHealth, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
-    Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regnerationstrank)
+    Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
     Zaubertrank.sayText("Regnerationstrank")
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -77,6 +77,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zaubertrank = sprites.create(assets.image`Resistenztrank`, SpriteKind.Resistenztrank)
         Zaubertrank.setPosition(550, 550)
         Zaubertrank.sayText("Resistenztrank")
+        Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
+        Zaubertrank.setPosition(200, 646)
+        Zaubertrank.sayText("Resistenztrank")
     }
     if (LevelVar == 3) {
         tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
@@ -100,12 +103,20 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zauberer.setPosition(37, 871)
     }
 })
+statusbars.onZero(StatusBarKind.Health, function (status) {
+    sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
+    info.changeScoreBy(20)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     controller.moveSprite(Zauberer, 200, 0)
     timer.after(40000, function () {
         controller.moveSprite(Zauberer, 100, 0)
     })
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    info.setLife(4)
 })
 info.onLifeZero(function () {
     timer.after(500, function () {
@@ -114,16 +125,12 @@ info.onLifeZero(function () {
         game.gameOver(false)
     })
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Regnerationstrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
-    info.setLife(4)
-})
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(50)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
-    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
+    statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer + -10, SchadenZauberer + -20)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (true) {
@@ -140,11 +147,16 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
     } else {
         info.changeLifeBy(0)
     }
+    for (let index = 0; index < randint(1, 5); index++) {
+        KleinerGeist = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
+        KleinerGeist.setPosition(Geist.x, Geist.x)
+        KleinerGeist.setScale(0.2, ScaleAnchor.Middle)
+    }
 })
 let Spuckball: Sprite = null
-let statusbar: StatusBarSprite = null
 let Geist: Sprite = null
 let projectile: Sprite = null
+let statusbar: StatusBarSprite = null
 let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
@@ -172,7 +184,8 @@ KleinerGeist.setFlag(SpriteFlag.GhostThroughWalls, true)
 KleinerGeist.setScale(0.2, ScaleAnchor.Middle)
 info.setScore(0)
 KleinerGeist.follow(Zauberer, 80)
-Zauberer.sayText("" + Zauberer.x + ("" + Zauberer.y))
+statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+statusbar.attachToSprite(KleinerGeist)
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
@@ -189,5 +202,5 @@ game.onUpdate(function () {
         ZaubererBildVar.flipX()
         Zauberer.setImage(ZaubererBildVar)
     }
-    Zauberer.sayText(convertToText(Zauberer.y))
+    Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
 })
