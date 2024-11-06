@@ -173,8 +173,6 @@ KleinerGeist.setScale(0.2, ScaleAnchor.Middle)
 info.setScore(0)
 KleinerGeist.follow(Zauberer, 80)
 Zauberer.sayText("" + Zauberer.x + ("" + Zauberer.y))
-let KleinerGeist2 = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
-KleinerGeist2.setPosition(700, 200)
 game.onUpdate(function () {
     if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
