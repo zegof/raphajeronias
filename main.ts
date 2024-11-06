@@ -19,18 +19,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, 
         SchadenZauberer = -10
     })
 })
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.runImageAnimation(
-    Zauberer,
-    assets.animation`MagierZaubertAnimation`,
-    500,
-    false
-    )
-    projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
-    projectile.setScale(Scale, ScaleAnchor.Middle)
-    pause(500)
-    projectile.setImage(assets.image`ProjectileZauberer`)
-})
 statusbars.onZero(StatusBarKind.BossHealth, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
@@ -155,20 +143,19 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
         KleinerGeist.follow(Zauberer)
     }
 })
+let projectile: Sprite = null
 let Spuckball: Sprite = null
 let Geist: Sprite = null
-let projectile: Sprite = null
 let statusbar: StatusBarSprite = null
 let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
 let LevelVar = 0
-let Scale = 0
 let Zauberer: Sprite = null
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
-Scale = 0.9
+let Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
 Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
@@ -189,20 +176,36 @@ KleinerGeist.follow(Zauberer, 80)
 statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.attachToSprite(KleinerGeist)
 game.onUpdate(function () {
-    if (Zauberer.vx > 0 && Zauberer.vy == 0) {
+    if (controller.A.isPressed()) {
+        ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
+        if (Zauberer.vx > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
+            projectile.setScale(Scale, ScaleAnchor.Middle)
+            timer.after(500, function () {
+                ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
+                projectile.setImage(assets.image`ProjectileZauberer`)
+            })
+        } else if (Zauberer.vx < 0) {
+            ZaubererBildVar.flipX()
+            projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
+            projectile.setScale(Scale, ScaleAnchor.Middle)
+            timer.after(500, function () {
+                ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
+                ZaubererBildVar.flipX()
+                projectile.setImage(assets.image`ProjectileZauberer`)
+            })
+        }
+    } else if (Zauberer.vx > 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
-        Zauberer.setImage(ZaubererBildVar)
     } else if (Zauberer.vx < 0 && Zauberer.vy == 0) {
         ZaubererBildVar = assets.image`Magier Normal`
         ZaubererBildVar.flipX()
-        Zauberer.setImage(ZaubererBildVar)
     } else if (Zauberer.vy != 0 && Zauberer.vx > 0) {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
-        Zauberer.setImage(ZaubererBildVar)
     } else if (Zauberer.vy != 0 && Zauberer.vx < 0) {
         ZaubererBildVar = assets.image`ZaubererJumpBild`
         ZaubererBildVar.flipX()
-        Zauberer.setImage(ZaubererBildVar)
     }
+    Zauberer.setImage(ZaubererBildVar)
     Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
 })
