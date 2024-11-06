@@ -35,7 +35,7 @@ statusbars.onZero(StatusBarKind.BossHealth, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
     Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
-    Zaubertrank.sayText("Regnerationstrank")
+    Zaubertrank.sayText("Regneration")
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Zauberer.vy == 0) {
@@ -73,13 +73,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         )
         Zaubertrank = sprites.create(assets.image`Stärketrank`, SpriteKind.Stärketrank)
         Zaubertrank.setPosition(720, 582)
-        Zaubertrank.sayText("Stärketrank")
+        Zaubertrank.sayText("Stärke")
         Zaubertrank = sprites.create(assets.image`Resistenztrank`, SpriteKind.Resistenztrank)
         Zaubertrank.setPosition(550, 550)
-        Zaubertrank.sayText("Resistenztrank")
+        Zaubertrank.sayText("Resistenz")
         Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
         Zaubertrank.setPosition(200, 646)
-        Zaubertrank.sayText("Regenerationstran")
+        Zaubertrank.sayText("Regeneration")
     }
     if (LevelVar == 3) {
         tiles.setCurrentTilemap(tilemap`Level2Tilemap`)
