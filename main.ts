@@ -22,7 +22,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, 
 statusbars.onZero(StatusBarKind.BossHealth, function (status) {
     tiles.setTileAt(status.spriteAttachedTo().tilemapLocation(), assets.tile`PortalTile`)
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
-    Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
+    Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
     Zaubertrank.sayText("Regneration")
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -39,8 +39,9 @@ sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
+    Schadengegner = -0.1
     timer.after(40000, function () {
-    	
+        Schadengegner = -0.5
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
@@ -59,13 +60,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         1000,
         true
         )
-        Zaubertrank = sprites.create(assets.image`Stärketrank`, SpriteKind.Stärketrank)
+        Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
         Zaubertrank.setPosition(720, 582)
         Zaubertrank.sayText("Stärke")
-        Zaubertrank = sprites.create(assets.image`Resistenztrank`, SpriteKind.Resistenztrank)
+        Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
         Zaubertrank.setPosition(550, 550)
         Zaubertrank.sayText("Resistenz")
-        Zaubertrank = sprites.create(assets.image`Regenerationstrank`, SpriteKind.Regenerationstrank)
+        Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
         Zaubertrank.setPosition(200, 646)
         Zaubertrank.sayText("Regeneration")
     }
@@ -113,13 +114,36 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     TraenkeMenu = miniMenu.createMenu(
-    miniMenu.createMenuItem("Schnelligkeit", assets.image`Schnelligkeitstrank`),
-    miniMenu.createMenuItem("Stärke", assets.image`Stärketrank`),
-    miniMenu.createMenuItem("Resistenz", assets.image`Resistenztrank`),
-    miniMenu.createMenuItem("Regneration", assets.image`Regenerationstrank`)
+    miniMenu.createMenuItem("Schnelligkeit", assets.image`SchnelligkeitstrankBild`),
+    miniMenu.createMenuItem("Stärke", assets.image`StärketrankBild`),
+    miniMenu.createMenuItem("Resistenz", assets.image`ResistenztrankBild`),
+    miniMenu.createMenuItem("Regneration", assets.image`RegenerationstrankBild`)
     )
+    TraenkeMenu.follow(Zauberer)
     TraenkeMenu.setTitle("Tränke")
     TraenkeMenu.setPosition(Zauberer.x, Zauberer.y)
+    TraenkeMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        TraenkeMenu.close()
+        if (selection == "Schnelligkeit" && info.score() >= 20) {
+            info.changeScoreBy(-20)
+            Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
+            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+        } else if (selection == "Stärke" && info.score() >= 45) {
+            info.changeScoreBy(-45)
+            Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
+            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+        } else if (selection == "Resistenz" && info.score() >= 60) {
+            info.changeScoreBy(-60)
+            Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
+            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+        } else if (selection == "Regneration" && info.score() >= 20) {
+            info.changeScoreBy(-20)
+            Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
+            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+        } else {
+            game.showLongText("Du hast zu wenig Geld, Ärmling!", DialogLayout.Center)
+        }
+    })
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
@@ -133,7 +157,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (true) {
-        info.changeLifeBy(-0.5)
+        info.changeLifeBy(Schadengegner)
         pause(5000)
     } else {
         info.changeLifeBy(0)
@@ -160,6 +184,7 @@ let ZaubererRichtung = 0
 let TraenkeMenu: miniMenu.MenuSprite = null
 let Spuckball: Sprite = null
 let Geist: Sprite = null
+let Schadengegner = 0
 let statusbar: StatusBarSprite = null
 let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
@@ -175,9 +200,9 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 2
+LevelVar = 1
 info.setLife(4)
-Zaubertrank = sprites.create(assets.image`Schnelligkeitstrank`, SpriteKind.Schnelligkeitstrank)
+Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
 Zaubertrank.sayText("Schnelligkeit")
 SchadenZauberer = -10
@@ -189,6 +214,7 @@ info.setScore(0)
 KleinerGeist.follow(Zauberer, 80)
 statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.attachToSprite(KleinerGeist)
+Schadengegner = -0.5
 game.onUpdate(function () {
     if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
