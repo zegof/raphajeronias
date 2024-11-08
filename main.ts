@@ -244,7 +244,9 @@ statusbar.attachToSprite(KleinerGeist)
 Schadengegner = -0.5
 MenuModus = 0
 game.onUpdate(function () {
-    if (controller.A.isPressed()) {
+    if (controller.A.isPressed() && Zauberer.overlapsWith(Ball)) {
+    	
+    } else if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
         if (ZaubererRichtung == 1) {
             projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
