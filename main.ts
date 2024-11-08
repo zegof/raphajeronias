@@ -108,37 +108,41 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(50)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    TraenkeMenu = miniMenu.createMenu(
-    miniMenu.createMenuItem("Schnelligkeit", assets.image`SchnelligkeitstrankBild`),
-    miniMenu.createMenuItem("Stärke", assets.image`StärketrankBild`),
-    miniMenu.createMenuItem("Resistenz", assets.image`ResistenztrankBild`),
-    miniMenu.createMenuItem("Regneration", assets.image`RegenerationstrankBild`)
-    )
-    TraenkeMenu.follow(Zauberer)
-    TraenkeMenu.setTitle("Tränke")
-    TraenkeMenu.setPosition(Zauberer.x, Zauberer.y)
-    TraenkeMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
-        TraenkeMenu.close()
-        if (selection == "Schnelligkeit" && info.score() >= 20) {
-            info.changeScoreBy(-20)
-            Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
-            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
-        } else if (selection == "Stärke" && info.score() >= 45) {
-            info.changeScoreBy(-45)
-            Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
-            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
-        } else if (selection == "Resistenz" && info.score() >= 60) {
-            info.changeScoreBy(-60)
-            Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
-            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
-        } else if (selection == "Regneration" && info.score() >= 20) {
-            info.changeScoreBy(-20)
-            Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
-            Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
-        } else {
-            game.showLongText("Du hast zu wenig Geld, Ärmling!", DialogLayout.Center)
-        }
-    })
+    if (MenuModus == 0) {
+        MenuModus = 1
+        TraenkeMenu = miniMenu.createMenu(
+        miniMenu.createMenuItem("Schnelligkeit", assets.image`SchnelligkeitstrankBild`),
+        miniMenu.createMenuItem("Stärke", assets.image`StärketrankBild`),
+        miniMenu.createMenuItem("Resistenz", assets.image`ResistenztrankBild`),
+        miniMenu.createMenuItem("Regneration", assets.image`RegenerationstrankBild`)
+        )
+        TraenkeMenu.follow(Zauberer)
+        TraenkeMenu.setTitle("Tränke")
+        TraenkeMenu.setPosition(Zauberer.x, Zauberer.y)
+        TraenkeMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
+            TraenkeMenu.close()
+            MenuModus = 0
+            if (selection == "Schnelligkeit" && info.score() >= 20) {
+                info.changeScoreBy(-20)
+                Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
+                Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+            } else if (selection == "Stärke" && info.score() >= 45) {
+                info.changeScoreBy(-45)
+                Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
+                Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+            } else if (selection == "Resistenz" && info.score() >= 60) {
+                info.changeScoreBy(-60)
+                Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
+                Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+            } else if (selection == "Regneration" && info.score() >= 20) {
+                info.changeScoreBy(-20)
+                Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
+                Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+            } else {
+                game.showLongText("Du hast zu wenig Geld, Geringverdiener!", DialogLayout.Center)
+            }
+        })
+    }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
@@ -191,6 +195,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let TraenkeMenu: miniMenu.MenuSprite = null
 let Geist: Sprite = null
+let MenuModus = 0
 let Schadengegner = 0
 let statusbar: StatusBarSprite = null
 let KleinerGeist: Sprite = null
@@ -222,6 +227,7 @@ KleinerGeist.follow(Zauberer, 80)
 statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.attachToSprite(KleinerGeist)
 Schadengegner = -0.5
+MenuModus = 0
 game.onUpdate(function () {
     if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
