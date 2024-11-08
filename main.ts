@@ -73,11 +73,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     if (LevelVar == 3) {
         tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
         Zauberer.setPosition(37, 720)
-        for (let index = 0; index < 10; index++) {
-            Spuckball = sprites.create(assets.image`SpukballBild`, SpriteKind.Enemy)
-        }
-        Spuckball.x = scene.screenWidth()
-        Spuckball.y = randint(10, scene.screenHeight())
     }
     if (LevelVar == 4) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
@@ -154,6 +149,18 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     tiles.setTileAt(tiles.getTileLocation(5, 18), assets.tile`FakeTile`)
     tiles.setWallAt(tiles.getTileLocation(6, 18), true)
     tiles.setWallAt(tiles.getTileLocation(5, 18), true)
+    game.showLongText("???: \"HAHAHAHA, DU BIST IN MEINE FALLE GETAPPT UND NUN STIRB!\"", DialogLayout.Top)
+    for (let Wert of tiles.getTilesByType(sprites.dungeon.stairSouth)) {
+        tiles.setTileAt(Wert, sprites.builtin.brick)
+    }
+    for (let index = 0; index < 10; index++) {
+        Spuckball = sprites.create(assets.image`SpukballBild`, SpriteKind.Enemy)
+        Spuckball.setVelocity(randint(-100, 100), randint(-100, 100))
+        Spuckball.setBounceOnWall(true)
+    }
+    timer.after(20000, function () {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 2000)
+    })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (true) {
@@ -181,8 +188,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 })
 let projectile: Sprite = null
 let ZaubererRichtung = 0
-let TraenkeMenu: miniMenu.MenuSprite = null
 let Spuckball: Sprite = null
+let TraenkeMenu: miniMenu.MenuSprite = null
 let Geist: Sprite = null
 let Schadengegner = 0
 let statusbar: StatusBarSprite = null
@@ -200,7 +207,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 1
+LevelVar = 2
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
