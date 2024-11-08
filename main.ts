@@ -87,10 +87,10 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
     controller.moveSprite(Zauberer, 200, 0)
     timer.after(40000, function () {
         controller.moveSprite(Zauberer, 100, 0)
+        sprites.destroy(otherSprite)
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
@@ -168,14 +168,16 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     }
     timer.after(20000, function () {
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 2000)
-        for (let Wert of Treppenarray) {
-            tiles.setTileAt(Wert, sprites.dungeon.stairNorth)
+        game.showLongText("???: \"NEIN!\"", DialogLayout.Top)
+        for (let Wert2 of Treppenarray) {
+            tiles.setTileAt(Wert2, sprites.dungeon.stairNorth)
         }
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(Schadengegner)
+        scene.cameraShake(4, 100)
         pause(5000)
     } else {
         info.changeLifeBy(0)
@@ -184,6 +186,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(-0.75)
+        scene.cameraShake(4, 100)
         pause(5000)
     } else {
         info.changeLifeBy(0)
@@ -220,7 +223,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
