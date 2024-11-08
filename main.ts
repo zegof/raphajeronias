@@ -76,7 +76,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     }
     if (LevelVar == 4) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        Ball = sprites.create(assets.image`BallBild`, SpriteKind.Player)
         tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
+        tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
+        Ball.setScale(0.5, ScaleAnchor.Middle)
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`Level3`)
@@ -205,6 +208,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
+let Ball: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
@@ -223,7 +227,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 1
+LevelVar = 3
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
