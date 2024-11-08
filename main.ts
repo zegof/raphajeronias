@@ -87,10 +87,10 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
     controller.moveSprite(Zauberer, 200, 0)
     timer.after(40000, function () {
         controller.moveSprite(Zauberer, 100, 0)
-        sprites.destroy(otherSprite)
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
