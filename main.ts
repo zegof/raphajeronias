@@ -227,7 +227,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
