@@ -154,6 +154,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     tiles.setWallAt(tiles.getTileLocation(6, 18), true)
     tiles.setWallAt(tiles.getTileLocation(5, 18), true)
     game.showLongText("???: \"HAHAHAHA, DU BIST IN MEINE FALLE GETAPPT UND NUN STIRB!\"", DialogLayout.Top)
+    Treppenarray = tiles.getTilesByType(sprites.dungeon.stairSouth)
     for (let Wert of tiles.getTilesByType(sprites.dungeon.stairSouth)) {
         tiles.setTileAt(Wert, sprites.builtin.brick)
     }
@@ -164,6 +165,9 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     }
     timer.after(20000, function () {
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 2000)
+        for (let Wert of Treppenarray) {
+            tiles.setTileAt(Wert, sprites.dungeon.stairNorth)
+        }
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -193,6 +197,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 let projectile: Sprite = null
 let ZaubererRichtung = 0
 let Spuckball: Sprite = null
+let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
 let Geist: Sprite = null
 let MenuModus = 0
