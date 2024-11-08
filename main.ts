@@ -76,7 +76,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     }
     if (LevelVar == 4) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
-        Zauberer.setPosition(37, 871)
+        tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`Level3`)
@@ -103,6 +103,9 @@ info.onLifeZero(function () {
         game.setGameOverScoringType(game.ScoringType.HighScore)
         game.gameOver(false)
     })
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.forestTiles14, function (sprite, location) {
+	
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(50)
@@ -217,7 +220,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 2
+LevelVar = 3
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
