@@ -208,7 +208,6 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
-let Ball: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
@@ -217,10 +216,12 @@ let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
 let LevelVar = 0
+let Ball: Sprite = null
 let Zauberer: Sprite = null
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
+Ball = sprites.create(assets.image`LeerBild`, SpriteKind.Enemy)
 let Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
 Zauberer.setPosition(20, 199)
