@@ -79,6 +79,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "BallBild"
     },
+    "image14": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEREAAAAAABDd3QEAABEA0RHdHQBATRER3d0dAEBNEdHd3R0AQE0R0d3dEQAAEQDR3REdAAAAABDd3QEAAAAAABERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "ZuckertrankBild"
+    },
     "anim4": {
         "namespace": "myAnimations",
         "id": "anim4",
