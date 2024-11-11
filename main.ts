@@ -93,7 +93,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
     }
     if (LevelVar == 4) {
         tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
-        Ball = sprites.create(assets.image`BallBild`, SpriteKind.Player)
+        Ball.setImage(assets.image`BallBild`)
         tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
