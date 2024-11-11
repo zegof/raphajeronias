@@ -18,10 +18,13 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (spr
     sprite.y += -5
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 100
     SchadenZauberer = -20
     timer.after(40000, function () {
         SchadenZauberer = -10
+        sprites.destroy(otherSprite)
     })
 })
 statusbars.onZero(StatusBarKind.BossHealth, function (status) {
@@ -46,10 +49,13 @@ sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
     info.changeScoreBy(100)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 40
     Schadengegner = -0.1
     timer.after(40000, function () {
         Schadengegner = -0.5
+        sprites.destroy(otherSprite)
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
@@ -107,26 +113,31 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 60
     controller.moveSprite(Zauberer, 200, 0)
     timer.after(40000, function () {
         controller.moveSprite(Zauberer, 100, 0)
+        sprites.destroy(otherSprite)
     })
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 80
     info.setLife(10)
     SchadenZauberer = -50
     controller.moveSprite(Zauberer, 200, 0)
-    sprites.destroy(otherSprite)
     Schadengegner = -0.01
     timer.after(40000, function () {
         SchadenZauberer = -10
         controller.moveSprite(Zauberer, 100, 0)
         Schadengegner = -0.5
+        sprites.destroy(otherSprite)
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
