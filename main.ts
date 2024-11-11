@@ -160,7 +160,9 @@ info.onLifeZero(function () {
     })
 })
 info.onScore(50, function () {
-    game.showLongText("Öffne das Tränkemenu mit dem B-Knopf und kaufe Tränke mit dem A-Knopf", DialogLayout.Top)
+    timer.after(500, function () {
+        game.showLongText("Öffne das Tränkemenu mit dem B-Knopf und kaufe Tränke mit dem A-Knopf", DialogLayout.Top)
+    })
 })
 sprites.onDestroyed(SpriteKind.Spuckbälle, function (sprite) {
     info.changeScoreBy(50)
