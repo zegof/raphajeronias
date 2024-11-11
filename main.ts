@@ -154,7 +154,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, o
 })
 info.onLifeZero(function () {
     timer.after(500, function () {
-        game.setGameOverMessage(false, "Game Over; Geschaffte Level: " + (LevelVar - 1))
+        game.setGameOverMessage(false, "Game Over")
         game.setGameOverScoringType(game.ScoringType.HighScore)
         game.gameOver(false)
     })
