@@ -125,6 +125,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sprite, location) {
+    tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
+    info.changeLifeBy(Schadengegner)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
     otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
     otherSprite.top = 2
@@ -166,9 +170,6 @@ info.onScore(50, function () {
 })
 sprites.onDestroyed(SpriteKind.Spuckbälle, function (sprite) {
     info.changeScoreBy(50)
-})
-scene.onOverlapTile(SpriteKind.Player, sprites.builtin.forestTiles14, function (sprite, location) {
-	
 })
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     info.changeScoreBy(50)
@@ -292,7 +293,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 1
+LevelVar = 3
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
