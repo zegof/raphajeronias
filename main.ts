@@ -1,3 +1,8 @@
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace SpriteKind {
     export const Penny = SpriteKind.create()
     export const Schnelligkeitstrank = SpriteKind.create()
@@ -148,6 +153,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sp
     sprites.destroy(otherSprite)
     info.setLife(4)
 })
+scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sprite, location) {
+	
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(Schadengegner)
@@ -284,7 +292,7 @@ let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
 let LevelVar = 0
-let Ball: Sprite = null
+let Ball: animation.Animation = null
 let Zauberer: Sprite = null
 let LONG_VERSION = 0
 // Long version
@@ -316,7 +324,7 @@ Schadengegner = -0.5
 MenuModus = 0
 game.onUpdate(function () {
     if (controller.A.isPressed() && Zauberer.overlapsWith(Ball)) {
-    	
+        Ball = animation.createAnimation(ActionKind.Idle, 200)
     } else if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
         if (ZaubererRichtung == 1) {
