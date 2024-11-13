@@ -154,7 +154,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sp
     info.setLife(4)
 })
 scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sprite, location) {
-	
+    sprites.destroy(Ball, effects.ashes, 500)
+    animation.stopAnimation(animation.AnimationTypes.All, Ball)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
@@ -292,7 +293,7 @@ let KleinerGeist: Sprite = null
 let SchadenZauberer = 0
 let Zaubertrank: Sprite = null
 let LevelVar = 0
-let Ball: animation.Animation = null
+let Ball: Sprite = null
 let Zauberer: Sprite = null
 let LONG_VERSION = 0
 // Long version
@@ -324,7 +325,12 @@ Schadengegner = -0.5
 MenuModus = 0
 game.onUpdate(function () {
     if (controller.A.isPressed() && Zauberer.overlapsWith(Ball)) {
-        Ball = animation.createAnimation(ActionKind.Idle, 200)
+        animation.runImageAnimation(
+        Ball,
+        assets.animation`BallKickAnimation`,
+        200,
+        false
+        )
     } else if (controller.A.isPressed()) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
         if (ZaubererRichtung == 1) {
