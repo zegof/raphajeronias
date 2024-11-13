@@ -286,6 +286,8 @@ let Zaubertrank: Sprite = null
 let LevelVar = 0
 let Ball: Sprite = null
 let Zauberer: Sprite = null
+let LONG_VERSION = 0
+// Long version
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
@@ -296,7 +298,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 4
+LevelVar = 3
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
