@@ -182,7 +182,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         miniMenu.createMenuItem("Stärke        45", assets.image`StärketrankBild`),
         miniMenu.createMenuItem("Resistenz     60", assets.image`ResistenztrankBild`),
         miniMenu.createMenuItem("Regneration   20", assets.image`RegenerationstrankBild`),
-        miniMenu.createMenuItem("Zucker        250", assets.image`ZuckertrankBild`)
+        miniMenu.createMenuItem("Zucker        250", assets.image`ZuckertrankBild`),
+        miniMenu.createMenuItem("MENU SCHLIESSEN")
         )
         TraenkeMenu.follow(Zauberer)
         TraenkeMenu.setTitle("Tränke")
@@ -210,6 +211,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
                 info.changeScoreBy(-250)
                 Zaubertrank = sprites.create(assets.image`ZuckertrankBild`, SpriteKind.Zuckerschocktrank)
                 Zaubertrank.setPosition(Zauberer.x, Zauberer.y)
+            } else if (selection == "MENU SCHLIESSEN") {
+            	
             } else {
                 game.showLongText("Du hast zu wenig Geld, Geringverdiener!", DialogLayout.Center)
             }
