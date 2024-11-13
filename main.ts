@@ -286,7 +286,7 @@ let Zauberer: Sprite = null
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
 Zauberer = sprites.create(ZaubererBildVar, SpriteKind.Player)
-Ball = sprites.create(assets.image`LeerBild`, SpriteKind.Enemy)
+Ball = sprites.create(assets.image`LeerBild`, SpriteKind.Food)
 let Scale = 0.9
 Zauberer.setScale(Scale, ScaleAnchor.Middle)
 Zauberer.setPosition(20, 199)
