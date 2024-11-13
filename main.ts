@@ -99,8 +99,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Ball.setScale(0.5, ScaleAnchor.Middle)
     }
     if (LevelVar == 5) {
-        tiles.setCurrentTilemap(tilemap`Level3`)
-        Zauberer.setPosition(37, 871)
+        tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
+        tiles.placeOnTile(Zauberer, tiles.getTileLocation(1, 1))
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Stärketrank, function (sprite, otherSprite) {
@@ -293,7 +293,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 4
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
