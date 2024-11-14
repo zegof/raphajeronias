@@ -103,7 +103,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
         for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
-            LavaBall = sprites.create(assets.image`FeuerballBild`, SpriteKind.Spuckbälle)
+            
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
             for (let index = 0; index < 1; index++) {
