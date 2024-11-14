@@ -156,6 +156,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sp
 scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sprite, location) {
     sprites.destroy(Ball, effects.ashes, 500)
     animation.stopAnimation(animation.AnimationTypes.All, Ball)
+    Zauberer.setBounceOnWall(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
@@ -307,7 +308,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
