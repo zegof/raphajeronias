@@ -302,9 +302,9 @@ let Zaubertrank: Sprite = null
 let LevelVar = 0
 let Ball: Sprite = null
 let Zauberer: Sprite = null
+let LONG_VERSION = 0
 music.play(music.createSong(assets.song`SpielLied`), music.PlaybackMode.LoopingInBackground)
 music.setVolume(1)
-let LONG_VERSION = 0
 // Long version
 tiles.setCurrentTilemap(tilemap`Level1Tilemap`)
 let ZaubererBildVar = assets.image`Magier Normal`
