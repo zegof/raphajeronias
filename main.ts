@@ -103,7 +103,24 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
         for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
-            LavaBall = sprites.create(, SpriteKind.Spuckbälle)
+            LavaBall = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.Spuckbälle)
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
         }
