@@ -102,6 +102,30 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
+        for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
+            LavaBall = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.Spuckbälle)
+            LavaBall.ay = 300
+            for (let index = 0; index < 200; index++) {
+                LavaBall.vy = -200
+            }
+        }
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
@@ -286,6 +310,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
+let LavaBall: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
