@@ -103,14 +103,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
         for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
-            let LavaBall: Sprite = null
+            LavaBall = sprites.create(assets.image`FeuerballBild`, SpriteKind.Spuckbälle)
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
-            for (let index = 0; index < 1; index++) {
-                timer.after(200, function () {
-                    LavaBall.vy = -200
-                })
-            }
         }
     }
     if (LevelVar == 5) {
@@ -296,6 +291,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
+let LavaBall: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
@@ -381,4 +377,13 @@ game.onUpdate(function () {
     }
     Zauberer.setImage(ZaubererBildVar)
     Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
+})
+game.onUpdateInterval(100, function () {
+    if (LevelVar == 4) {
+        for (let Wert of sprites.allOfKind(SpriteKind.Spuckbälle)) {
+            if (Wert.vy == 0) {
+                Wert.vy = -200
+            }
+        }
+    }
 })
