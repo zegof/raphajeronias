@@ -102,6 +102,26 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
+        for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
+            LavaBall = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.Spuckbälle)
+        }
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
@@ -156,6 +176,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sp
 scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sprite, location) {
     sprites.destroy(Ball, effects.ashes, 500)
     animation.stopAnimation(animation.AnimationTypes.All, Ball)
+    Zauberer.setBounceOnWall(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
@@ -285,6 +306,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
+let LavaBall: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
@@ -307,7 +329,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
