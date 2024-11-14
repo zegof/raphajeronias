@@ -103,7 +103,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
         for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
-            
+            let LavaBall: Sprite = null
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
             for (let index = 0; index < 1; index++) {
@@ -250,8 +250,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     tiles.setWallAt(tiles.getTileLocation(5, 18), true)
     game.showLongText("???: \"HAHAHAHA, DU BIST IN MEINE FALLE GETAPPT UND NUN STIRB!\"", DialogLayout.Top)
     Treppenarray = tiles.getTilesByType(sprites.dungeon.stairSouth)
-    for (let Wert of tiles.getTilesByType(sprites.dungeon.stairSouth)) {
-        tiles.setTileAt(Wert, sprites.builtin.brick)
+    for (let Wert2 of tiles.getTilesByType(sprites.dungeon.stairSouth)) {
+        tiles.setTileAt(Wert2, sprites.builtin.brick)
     }
     for (let index = 0; index < 10; index++) {
         Spuckball = sprites.create(assets.image`SpukballBild`, SpriteKind.Spuckbälle)
@@ -261,8 +261,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
     timer.after(20000, function () {
         sprites.destroyAllSpritesOfKind(SpriteKind.Spuckbälle, effects.spray, 2000)
         game.showLongText("???: \"NEIN!\"", DialogLayout.Top)
-        for (let Wert2 of Treppenarray) {
-            tiles.setTileAt(Wert2, sprites.dungeon.stairNorth)
+        for (let Wert22 of Treppenarray) {
+            tiles.setTileAt(Wert22, sprites.dungeon.stairNorth)
         }
     })
 })
@@ -296,7 +296,6 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
-let LavaBall: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
 let Schadengegner = 0
