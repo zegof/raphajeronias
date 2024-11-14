@@ -84,6 +84,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "BoeserZaubererBild"
     },
+    "image16": {
+        "data": "hwQQABAAAAAAAABCRVQFAAAAIiJEQlUAAEAiIkRCRAUAIiJEJCJCBQBERFQkQkIFUERUVSQiQgVUVVVVRCJUBURERFVDQlREJCJCRFVEVCQiIkIkVFVVJABERCJCVUUiAFBEQkJVJAQAAEUiQkVCAgAAQCJERSIAAABAIlRFAgAAAABAVAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "FeuerballBild"
+    },
     "anim4": {
         "namespace": "myAnimations",
         "id": "anim4",
