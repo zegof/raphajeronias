@@ -70,6 +70,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
         Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Boss)
+        Geist.setPosition(734, 726)
         statusbar = statusbars.create(20, 4, StatusBarKind.BossHealth)
         statusbar.setColor(10, 8)
         statusbar.attachToSprite(Geist, 0, 0)
@@ -89,7 +90,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         Zaubertrank.setPosition(200, 646)
         Zaubertrank.sayText("Regeneration")
         Zaubertrank = sprites.create(assets.image`ZuckertrankBild`, SpriteKind.Zuckerschocktrank)
-        Zaubertrank.setPosition(282, 151)
+        Zaubertrank.setPosition(200, 646)
         Zaubertrank.sayText("Zucker")
     }
     if (LevelVar == 3) {
@@ -316,7 +317,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
