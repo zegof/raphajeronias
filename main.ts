@@ -162,6 +162,7 @@ scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sp
     sprites.destroy(Ball, effects.ashes, 500)
     animation.stopAnimation(animation.AnimationTypes.All, Ball)
     Zauberer.setBounceOnWall(false)
+    tiles.setTileAt(location, assets.tile`transparency16`)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
