@@ -12,6 +12,7 @@ namespace SpriteKind {
     export const Boss = SpriteKind.create()
     export const Zuckerschocktrank = SpriteKind.create()
     export const Spuckbälle = SpriteKind.create()
+    export const FinalBoss = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const BossHealth = StatusBarKind.create()
@@ -108,6 +109,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
         }
+        Endboss = sprites.create(assets.image`BoeserZaubererBild`, SpriteKind.FinalBoss)
+        tiles.placeOnTile(Endboss, tiles.getTileLocation(45, 45))
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
@@ -267,8 +270,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     if (true) {
         info.changeLifeBy(Schadengegner)
         pause(5000)
-    } else {
-        info.changeLifeBy(0)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
@@ -276,8 +277,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
         info.changeLifeBy(-0.75)
         scene.cameraShake(4, 100)
         pause(5000)
-    } else {
-        info.changeLifeBy(0)
     }
     for (let index = 0; index < randint(1, 5); index++) {
         KleinerGeist = sprites.create(assets.image`KleinerGeistBild`, SpriteKind.Enemy)
@@ -293,6 +292,7 @@ let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
 let TraenkeMenu: miniMenu.MenuSprite = null
+let Endboss: Sprite = null
 let LavaBall: Sprite = null
 let Geist: Sprite = null
 let MenuModus = 0
