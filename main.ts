@@ -1,8 +1,3 @@
-enum ActionKind {
-    Walking,
-    Idle,
-    Jumping
-}
 namespace SpriteKind {
     export const Penny = SpriteKind.create()
     export const Schnelligkeitstrank = SpriteKind.create()
@@ -381,9 +376,9 @@ game.onUpdate(function () {
 })
 game.onUpdateInterval(100, function () {
     if (LevelVar == 4) {
-        for (let Wert of sprites.allOfKind(SpriteKind.Spuckbälle)) {
-            if (Wert.vy == 0) {
-                Wert.vy = -200
+        for (let Wert3 of sprites.allOfKind(SpriteKind.Spuckbälle)) {
+            if (Wert3.vy == 0) {
+                Wert3.vy = -200
             }
         }
     }
