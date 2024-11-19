@@ -77,13 +77,23 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite
         tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
         tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
         Ball.setScale(0.5, ScaleAnchor.Middle)
+        Ball.setFlag(SpriteFlag.GhostThroughWalls, true)
         for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
             LavaBall = sprites.create(assets.image`FeuerballBild`, SpriteKind.Spuckbälle)
             LavaBall.ay = 300
             tiles.placeOnTile(LavaBall, Wert)
         }
         Endboss = sprites.create(assets.image`BoeserZaubererBild`, SpriteKind.FinalBoss)
-        tiles.placeOnTile(Endboss, tiles.getTileLocation(45, 45))
+        animation.runImageAnimation(
+        Endboss,
+        assets.animation`BoeserZaubererAnimation`,
+        1000,
+        true
+        )
+        tiles.placeOnTile(Endboss, tiles.getTileLocation(62, 48))
+        statusbar = statusbars.create(25, 4, StatusBarKind.BossHealth)
+        statusbar.setColor(10, 2)
+        statusbar.attachToSprite(Endboss, 0, 0)
     }
     if (LevelVar == 5) {
         tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
@@ -142,6 +152,7 @@ scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sp
     sprites.destroy(Ball, effects.ashes, 500)
     animation.stopAnimation(animation.AnimationTypes.All, Ball)
     Zauberer.setBounceOnWall(false)
+    tiles.setWallAt(location, false)
     tiles.setTileAt(location, assets.tile`transparency16`)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
@@ -157,6 +168,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(Schadengegner)
+        sprites.destroy(otherSprite)
         pause(5000)
     } else {
         info.changeLifeBy(0)
@@ -239,6 +251,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
         statusbar.attachToSprite(KleinerGeist)
         KleinerGeist.follow(Zauberer)
     }
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.FinalBoss, function (sprite, otherSprite) {
+    statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += -0.1
 })
 sprites.onDestroyed(SpriteKind.Spuckbälle, function (sprite) {
     info.changeScoreBy(50)
@@ -373,6 +388,12 @@ game.onUpdate(function () {
     }
     Zauberer.setImage(ZaubererBildVar)
     Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
+})
+game.onUpdateInterval(1000, function () {
+    if (LevelVar == 4) {
+        projectile = sprites.createProjectileFromSprite(assets.image`FeuerballBild`, Endboss, 50, 0)
+        projectile.setScale(Scale, ScaleAnchor.Middle)
+    }
 })
 game.onUpdateInterval(100, function () {
     if (LevelVar == 4) {
