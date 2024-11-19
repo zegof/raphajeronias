@@ -40,6 +40,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (spr
 scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
     LevelVar += 1
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Spuckbälle)
     if (LevelVar == 2) {
         tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
         Zauberer.setPosition(37, 743)
@@ -359,6 +360,7 @@ game.onUpdate(function () {
             timer.after(500, function () {
                 ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
                 projectile.setImage(assets.image`ProjectileZauberer`)
+                pause(500)
             })
         } else if (ZaubererRichtung == 2) {
             ZaubererBildVar.flipX()
