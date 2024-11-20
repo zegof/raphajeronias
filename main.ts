@@ -8,6 +8,7 @@ namespace SpriteKind {
     export const Zuckerschocktrank = SpriteKind.create()
     export const Spuckbälle = SpriteKind.create()
     export const FinalBoss = SpriteKind.create()
+    export const LieberZauberer = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const BossHealth = StatusBarKind.create()
@@ -36,70 +37,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (spr
         Schadengegner = -0.5
         sprites.destroy(otherSprite)
     })
-})
-scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
-    LevelVar += 1
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Spuckbälle)
-    if (LevelVar == 2) {
-        tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
-        Zauberer.setPosition(37, 743)
-        Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Boss)
-        Geist.setPosition(734, 726)
-        statusbar = statusbars.create(20, 4, StatusBarKind.BossHealth)
-        statusbar.setColor(10, 8)
-        statusbar.attachToSprite(Geist, 0, 0)
-        animation.runImageAnimation(
-        Geist,
-        assets.animation`GeistAngriffAnimation`,
-        1000,
-        true
-        )
-        Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
-        Zaubertrank.setPosition(720, 582)
-        Zaubertrank.sayText("Stärke")
-        Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
-        Zaubertrank.setPosition(550, 550)
-        Zaubertrank.sayText("Resistenz")
-        Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
-        Zaubertrank.setPosition(200, 646)
-        Zaubertrank.sayText("Regeneration")
-        Zaubertrank = sprites.create(assets.image`ZuckertrankBild`, SpriteKind.Zuckerschocktrank)
-        Zaubertrank.setPosition(200, 646)
-        Zaubertrank.sayText("Zucker")
-    }
-    if (LevelVar == 3) {
-        tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
-        Zauberer.setPosition(37, 720)
-    }
-    if (LevelVar == 4) {
-        tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
-        Ball.setImage(assets.image`BallBild`)
-        tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
-        tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
-        Ball.setScale(0.5, ScaleAnchor.Middle)
-        Ball.setFlag(SpriteFlag.GhostThroughWalls, true)
-        for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
-            LavaBall = sprites.create(assets.image`FeuerballBild`, SpriteKind.Spuckbälle)
-            LavaBall.ay = 300
-            tiles.placeOnTile(LavaBall, Wert)
-        }
-        Endboss = sprites.create(assets.image`BoeserZaubererBild`, SpriteKind.FinalBoss)
-        animation.runImageAnimation(
-        Endboss,
-        assets.animation`BoeserZaubererAnimation`,
-        1000,
-        true
-        )
-        tiles.placeOnTile(Endboss, tiles.getTileLocation(62, 48))
-        statusbar = statusbars.create(25, 4, StatusBarKind.BossHealth)
-        statusbar.setColor(10, 2)
-        statusbar.attachToSprite(Endboss, 0, 0)
-    }
-    if (LevelVar == 5) {
-        tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
-        tiles.placeOnTile(Zauberer, tiles.getTileLocation(1, 1))
-    }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (MenuModus == 0) {
@@ -205,6 +142,72 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Resistenztrank, function (sprite
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Resistenztrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`PortalTile`, function (sprite, location) {
+    LevelVar += 1
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Spuckbälle)
+    if (LevelVar == 2) {
+        tiles.setCurrentTilemap(tilemap`Bossarena1Tilemap`)
+        Zauberer.setPosition(37, 743)
+        Geist = sprites.create(assets.image`Geist Normal`, SpriteKind.Boss)
+        Geist.setPosition(734, 726)
+        statusbar = statusbars.create(20, 4, StatusBarKind.BossHealth)
+        statusbar.setColor(10, 8)
+        statusbar.attachToSprite(Geist, 0, 0)
+        animation.runImageAnimation(
+        Geist,
+        assets.animation`GeistAngriffAnimation`,
+        1000,
+        true
+        )
+        Zaubertrank = sprites.create(assets.image`StärketrankBild`, SpriteKind.Stärketrank)
+        Zaubertrank.setPosition(720, 582)
+        Zaubertrank.sayText("Stärke")
+        Zaubertrank = sprites.create(assets.image`ResistenztrankBild`, SpriteKind.Resistenztrank)
+        Zaubertrank.setPosition(550, 550)
+        Zaubertrank.sayText("Resistenz")
+        Zaubertrank = sprites.create(assets.image`RegenerationstrankBild`, SpriteKind.Regenerationstrank)
+        Zaubertrank.setPosition(200, 646)
+        Zaubertrank.sayText("Regeneration")
+        Zaubertrank = sprites.create(assets.image`ZuckertrankBild`, SpriteKind.Zuckerschocktrank)
+        Zaubertrank.setPosition(200, 646)
+        Zaubertrank.sayText("Zucker")
+    }
+    if (LevelVar == 3) {
+        tiles.setCurrentTilemap(tilemap`Level2Tilemap0`)
+        Zauberer.setPosition(37, 720)
+    }
+    if (LevelVar == 4) {
+        tiles.setCurrentTilemap(tilemap`Level3Tilemap`)
+        Ball.setImage(assets.image`BallBild`)
+        tiles.placeOnTile(Zauberer, tiles.getTileLocation(2, 2))
+        tiles.placeOnTile(Ball, tiles.getTileLocation(32, 8))
+        Ball.setScale(0.5, ScaleAnchor.Middle)
+        Ball.setFlag(SpriteFlag.GhostThroughWalls, true)
+        for (let Wert of tiles.getTilesByType(sprites.dungeon.hazardLava1)) {
+            LavaBall = sprites.create(assets.image`FeuerballBild`, SpriteKind.Spuckbälle)
+            LavaBall.ay = 300
+            tiles.placeOnTile(LavaBall, Wert)
+        }
+        Endboss = sprites.create(assets.image`BoeserZaubererBild`, SpriteKind.FinalBoss)
+        animation.runImageAnimation(
+        Endboss,
+        assets.animation`BoeserZaubererAnimation`,
+        1000,
+        true
+        )
+        tiles.placeOnTile(Endboss, tiles.getTileLocation(62, 48))
+        statusbar = statusbars.create(25, 4, StatusBarKind.BossHealth)
+        statusbar.setColor(10, 2)
+        statusbar.attachToSprite(Endboss, 0, 0)
+    }
+    if (LevelVar == 5) {
+        tiles.setCurrentTilemap(tilemap`FinalBossarenaTilemap`)
+        HimmlischerZauberer = sprites.create(assets.image`HimmlischerZaubererBild`, SpriteKind.LieberZauberer)
+        tiles.placeOnTile(HimmlischerZauberer, tiles.getTileLocation(14, 48))
+        tiles.placeOnTile(Zauberer, tiles.getTileLocation(1, 1))
+    }
+})
 info.onLifeZero(function () {
     timer.after(500, function () {
         game.setGameOverMessage(false, "Game Over")
@@ -268,6 +271,13 @@ info.onScore(50, function () {
         game.showLongText("Öffne das Tränkemenu mit dem B-Knopf und kaufe Tränke mit dem A-Knopf", DialogLayout.Top)
     })
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.LieberZauberer, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    game.setDialogTextColor(5)
+    game.showLongText("Schiss mich doch nicht ab! 🥺 ", DialogLayout.Top)
+    game.showLongText("Ich bin ein himmlischer Zauberer und will dir ein Edelstein als Belohnung geben. Hier!", DialogLayout.Top)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 10, SchadenZauberer - 20)
@@ -302,10 +312,11 @@ let projectile: Sprite = null
 let ZaubererRichtung = 0
 let Spuckball: Sprite = null
 let Treppenarray: tiles.Location[] = []
-let TraenkeMenu: miniMenu.MenuSprite = null
+let HimmlischerZauberer: Sprite = null
 let Endboss: Sprite = null
 let LavaBall: Sprite = null
 let Geist: Sprite = null
+let TraenkeMenu: miniMenu.MenuSprite = null
 let MenuModus = 0
 let Schadengegner = 0
 let statusbar: StatusBarSprite = null
@@ -328,7 +339,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 1
+LevelVar = 4
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
@@ -397,7 +408,6 @@ game.onUpdate(function () {
         ZaubererRichtung = 2
     }
     Zauberer.setImage(ZaubererBildVar)
-    Zauberer.sayText("" + Zauberer.x + " " + ("" + Zauberer.y))
 })
 game.onUpdateInterval(1000, function () {
     if (LevelVar == 4) {
