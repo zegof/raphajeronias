@@ -24,6 +24,7 @@
     },
     "files.exclude": {
         "**/pxt_modules": true,
-        "**/.pxt": true
+        "**/.pxt": true,
+        "**/mkc.json": true
     }
 }
