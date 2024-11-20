@@ -13,21 +13,8 @@ namespace SpriteKind {
 namespace StatusBarKind {
     export const BossHealth = StatusBarKind.create()
 }
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.spray, 1000)
-})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Schnelligkeitstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, otherSprite) {
-    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
-    otherSprite.top = 2
-    otherSprite.left = 100
-    SchadenZauberer = -20
-    timer.after(40000, function () {
-        SchadenZauberer = -10
-        sprites.destroy(otherSprite)
-    })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -35,6 +22,21 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Regenerationstrank, function (sp
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Stärketrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 80
+    info.setLife(10)
+    SchadenZauberer = -50
+    controller.moveSprite(Zauberer, 200, 0)
+    Schadengegner = -0.01
+    timer.after(40000, function () {
+        SchadenZauberer = -10
+        controller.moveSprite(Zauberer, 100, 0)
+        Schadengegner = -0.5
+        sprites.destroy(otherSprite)
+    })
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (MenuModus == 0) {
@@ -81,6 +83,9 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite, effects.spray, 1000)
+})
 scene.onOverlapTile(SpriteKind.Food, sprites.builtin.forestTiles11, function (sprite, location) {
     sprites.destroy(Ball, effects.ashes, 500)
     animation.stopAnimation(animation.AnimationTypes.All, Ball)
@@ -98,13 +103,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Schnelligkeitstrank, function (s
         sprites.destroy(otherSprite)
     })
 })
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
-    sprites.destroy(sprite, effects.ashes, 500)
-    statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
-})
-sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
-    info.changeScoreBy(100)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, otherSprite) {
     if (true) {
         info.changeLifeBy(Schadengegner)
@@ -112,6 +110,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Spuckbälle, function (sprite, o
         pause(5000)
     } else {
         info.changeLifeBy(0)
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (true) {
+        info.changeLifeBy(Schadengegner)
+        pause(5000)
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -217,8 +221,29 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
 statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.LieberZauberer, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    game.setDialogTextColor(5)
+    game.showLongText("Schiss mich doch nicht ab! 🥺 ", DialogLayout.Top)
+    game.showLongText("Ich bin ein himmlischer Zauberer und will dir ein Edelstein als Belohnung geben. Hier!", DialogLayout.Top)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
+    sprites.destroy(sprite, effects.ashes, 500)
+    statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairNorth, function (sprite, location) {
     sprite.y += -5
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Stärketrank, function (sprite, otherSprite) {
+    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+    otherSprite.top = 2
+    otherSprite.left = 100
+    SchadenZauberer = -20
+    timer.after(40000, function () {
+        SchadenZauberer = -10
+        sprites.destroy(otherSprite)
+    })
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Regenerationstrank, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.spray, 1000)
@@ -241,21 +266,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.FinalBoss, function (sprite, otherSprite) {
     statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += -0.1
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Zuckerschocktrank, function (sprite, otherSprite) {
-    otherSprite.setFlag(SpriteFlag.RelativeToCamera, true)
-    otherSprite.top = 2
-    otherSprite.left = 80
-    info.setLife(10)
-    SchadenZauberer = -50
-    controller.moveSprite(Zauberer, 200, 0)
-    Schadengegner = -0.01
-    timer.after(40000, function () {
-        SchadenZauberer = -10
-        controller.moveSprite(Zauberer, 100, 0)
-        Schadengegner = -0.5
-        sprites.destroy(otherSprite)
-    })
-})
 sprites.onDestroyed(SpriteKind.Spuckbälle, function (sprite) {
     info.changeScoreBy(50)
 })
@@ -268,16 +278,12 @@ info.onScore(50, function () {
         game.showLongText("Öffne das Tränkemenu mit dem B-Knopf und kaufe Tränke mit dem A-Knopf", DialogLayout.Top)
     })
 })
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.LieberZauberer, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    game.setDialogTextColor(5)
-    game.showLongText("Schiss mich doch nicht ab! 🥺 ", DialogLayout.Top)
-    game.showLongText("Ich bin ein himmlischer Zauberer und will dir ein Edelstein als Belohnung geben. Hier!", DialogLayout.Top)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
-})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite).value += randint(SchadenZauberer - 10, SchadenZauberer - 20)
+})
+sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
+    info.changeScoreBy(100)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(6, 18), assets.tile`FakeTile`)
@@ -301,12 +307,6 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (spr
             tiles.setTileAt(Wert22, sprites.dungeon.stairNorth)
         }
     })
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (true) {
-        info.changeLifeBy(Schadengegner)
-        pause(5000)
-    }
 })
 let projectile: Sprite = null
 let ZaubererRichtung = 0
