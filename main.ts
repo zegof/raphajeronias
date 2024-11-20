@@ -328,7 +328,7 @@ Zauberer.setPosition(20, 199)
 controller.moveSprite(Zauberer, 100, 0)
 Zauberer.ay = 300
 scene.cameraFollowSprite(Zauberer)
-LevelVar = 3
+LevelVar = 1
 info.setLife(4)
 Zaubertrank = sprites.create(assets.image`SchnelligkeitstrankBild`, SpriteKind.Schnelligkeitstrank)
 Zaubertrank.setPosition(500, 199)
@@ -344,6 +344,7 @@ statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.attachToSprite(KleinerGeist)
 Schadengegner = -0.5
 MenuModus = 0
+let darfZaubern = true
 game.onUpdate(function () {
     if (controller.A.isPressed() && Zauberer.overlapsWith(Ball)) {
         animation.runImageAnimation(
@@ -352,15 +353,16 @@ game.onUpdate(function () {
         200,
         false
         )
-    } else if (controller.A.isPressed()) {
+    } else if (controller.A.isPressed() && darfZaubern) {
         ZaubererBildVar = assets.image`ZaubererZaubert1Bild`
+        darfZaubern = false
         if (ZaubererRichtung == 1) {
             projectile = sprites.createProjectileFromSprite(assets.image`LeerBild`, Zauberer, 50, 0)
             projectile.setScale(Scale, ScaleAnchor.Middle)
             timer.after(500, function () {
                 ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
                 projectile.setImage(assets.image`ProjectileZauberer`)
-                pause(500)
+                darfZaubern = true
             })
         } else if (ZaubererRichtung == 2) {
             ZaubererBildVar.flipX()
@@ -370,8 +372,14 @@ game.onUpdate(function () {
                 ZaubererBildVar = assets.image`ZaubererZaubert2Bild`
                 ZaubererBildVar.flipX()
                 projectile.setImage(assets.image`ProjectileZauberer`)
+                darfZaubern = true
             })
         }
+    } else if (controller.down.isPressed() && ZaubererRichtung == 1) {
+        ZaubererBildVar = assets.image`ZaubererDuckenBild`
+    } else if (controller.down.isPressed() && ZaubererRichtung == 2) {
+        ZaubererBildVar = assets.image`ZaubererDuckenBild`
+        ZaubererBildVar.flipX()
     } else if (Zauberer.vx > 0 && ZaubererRichtung == 1) {
         ZaubererBildVar = assets.image`Magier Normal`
     } else if (Zauberer.vx < 0 && ZaubererRichtung == 2) {
