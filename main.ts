@@ -221,6 +221,13 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
 statusbars.onZero(StatusBarKind.Health, function (status) {
     sprites.destroy(status.spriteAttachedTo(), effects.ashes, 500)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.LieberZauberer, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    game.setDialogTextColor(5)
+    game.showLongText("Schiss mich doch nicht ab! 🥺 ", DialogLayout.Top)
+    game.showLongText("Ich bin ein himmlischer Zauberer und will dir ein Edelstein als Belohnung geben. Hier!", DialogLayout.Top)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
     statusbars.getStatusBarAttachedTo(StatusBarKind.BossHealth, otherSprite).value += randint(SchadenZauberer - 9, SchadenZauberer)
@@ -270,13 +277,6 @@ info.onScore(50, function () {
     timer.after(500, function () {
         game.showLongText("Öffne das Tränkemenu mit dem B-Knopf und kaufe Tränke mit dem A-Knopf", DialogLayout.Top)
     })
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.LieberZauberer, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    game.setDialogTextColor(5)
-    game.showLongText("Schiss mich doch nicht ab! 🥺 ", DialogLayout.Top)
-    game.showLongText("Ich bin ein himmlischer Zauberer und will dir ein Edelstein als Belohnung geben. Hier!", DialogLayout.Top)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.ashes, 500)
